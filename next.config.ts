@@ -1,8 +1,15 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+const isProd = process.env.NODE_ENV === "production";
 
+const nextConfig: NextConfig = {
+  output: "export",
+  images: {
+    unoptimized: true,
+  },
+
+  basePath: isProd ? "/note-app" : "",
+  assetPrefix: isProd ? "/note-app/" : "",
+};
 
 export default nextConfig;
