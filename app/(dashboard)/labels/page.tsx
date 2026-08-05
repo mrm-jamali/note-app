@@ -1,4 +1,6 @@
 import { X } from "lucide-react";
+import Page from "@/components/layout/Page";
+import PageHeader from "@/components/layout/PageHeader";
 
 function Labels() {
   const colors = [
@@ -13,18 +15,11 @@ function Labels() {
   ];
 
   return (
-    <div className="mx-auto mt-10 w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-
-      {/* Header */}
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">
-          برچسب جدید
-        </h1>
-
-        <button className="rounded-lg p-2 transition hover:bg-gray-100">
-          <X size={22} />
-        </button>
-      </div>
+     <Page>
+      <PageHeader
+        title="برچسب جدید"
+        description="یک برچسب جدید برای دسته‌بندی یادداشت‌ها ایجاد کنید."
+      />
 
       <form className="space-y-8">
 
@@ -79,7 +74,7 @@ function Labels() {
         </div>
 
       </form>
-    </div>
+       </Page>
   );
 }
 

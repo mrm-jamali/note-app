@@ -1,15 +1,16 @@
 import { notes } from "@/data/notes";
+import Page from "@/components/layout/Page";
+import PageHeader from "@/components/layout/PageHeader";
 
 export default function ArchivePage() {
   const archivedNotes = notes.filter((note) => note.archived);
 
   return (
-    <div className="space-y-8">
-
-      <h1 className="text-3xl font-bold">
-        آرشیو
-      </h1>
-
+     <Page>
+      <PageHeader
+        title="برچسب جدید"
+        description="یک برچسب جدید برای دسته‌بندی یادداشت‌ها ایجاد کنید."
+      />
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {archivedNotes.map((note) => (
           <div
@@ -32,6 +33,6 @@ export default function ArchivePage() {
         ))}
       </div>
 
-    </div>
+      </Page>
   );
 }

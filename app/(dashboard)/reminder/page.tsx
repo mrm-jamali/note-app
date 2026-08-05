@@ -1,10 +1,14 @@
+import Page from "@/components/layout/Page";
+import PageHeader from "@/components/layout/PageHeader";
+
 export default function ReminderPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl p-6">
+      <Page>
 
-      <h1 className="mb-8 text-3xl font-bold">
-        یادآوری‌ها
-      </h1>
+      <PageHeader
+        title="یادآوری‌ها"
+        description="مدیریت تمام یادآوری‌های شما"
+      />
 
       {/* Upcoming */}
       <section className="mb-8">
@@ -73,6 +77,6 @@ export default function ReminderPage() {
 
       </section>
 
-    </div>
+       </Page>
   );
 }
