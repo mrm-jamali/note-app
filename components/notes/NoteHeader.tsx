@@ -1,16 +1,12 @@
 import React from 'react'
 import { notes } from '@/data/notes'
 import Link from 'next/link';
-type PageHeaderProps = {
-  title: string;
-};
 
-function NoteHeader({title}:PageHeaderProps) {
+
+function NoteHeader() {
   return (
    <div className="mt-8 flex flex-col items-start justify-between gap-4 px-4 sm:mt-10 sm:flex-row sm:items-center sm:px-6 bg-yellow-200">
-  <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl mr-5">
-    {title}
-  </h2>
+ 
 
 <Link
   href="/newnote"

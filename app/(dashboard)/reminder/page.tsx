@@ -1,82 +1,182 @@
 import Page from "@/components/layout/Page";
 import PageHeader from "@/components/layout/PageHeader";
+import { CalendarClock, Clock } from "lucide-react";
 
 export default function ReminderPage() {
+  const todayReminders = [
+    {
+      time: "08:00",
+      title: "مراجعه به پزشک",
+    },
+    {
+      time: "11:00",
+      title: "جلسه با تیم",
+    },
+    {
+      time: "15:00",
+      title: "تماس با مشتری",
+    },
+  ];
+
+  const tomorrowReminders = [
+    {
+      time: "10:00",
+      title: "بررسی پروژه جدید",
+    },
+  ];
+
   return (
-      <Page>
+    <Page>
 
       <PageHeader
         title="یادآوری‌ها"
         description="مدیریت تمام یادآوری‌های شما"
       />
 
-      {/* Upcoming */}
-      <section className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-gray-700">
-          امروز
-        </h2>
 
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+      {/* Today */}
+      <section className="mb-10">
 
-          <div className="flex items-center border-b px-5 py-4">
-            <span className="w-24 font-medium text-gray-500">
-              08:00
-            </span>
+        <div className="mb-4 flex items-center gap-2">
+          <CalendarClock
+            size={22}
+            className="text-orange-500"
+          />
 
-            <span>
-              مراجعه به پزشک
-            </span>
-          </div>
+          <h2 className="text-lg font-semibold text-gray-700">
+            امروز
+          </h2>
+        </div>
 
-          <div className="flex items-center border-b px-5 py-4">
-            <span className="w-24 font-medium text-gray-500">
-              11:00
-            </span>
 
-            <span>
-              جلسه با تیم
-            </span>
-          </div>
+        <div className="space-y-3">
 
-          <div className="flex items-center px-5 py-4">
-            <span className="w-24 font-medium text-gray-500">
-              15:00
-            </span>
+          {todayReminders.map((item) => (
+            <div
+              key={item.time}
+              className="
+              flex items-center justify-between
+              rounded-xl border border-gray-200
+              bg-white px-5 py-4
+              shadow-sm
+              transition
+              hover:border-orange-300
+              hover:shadow-md
+              "
+            >
 
-            <span>
-              تماس با مشتری
-            </span>
-          </div>
+              <div className="flex items-center gap-4">
+
+                <div className="
+                  flex h-10 w-10 items-center justify-center
+                  rounded-full bg-orange-100
+                ">
+                  <Clock
+                    size={20}
+                    className="text-orange-600"
+                  />
+                </div>
+
+
+                <span className="font-medium text-gray-700">
+                  {item.title}
+                </span>
+
+              </div>
+
+
+              <span className="
+                rounded-lg
+                bg-gray-100
+                px-3 py-1
+                text-sm
+                font-medium
+                text-gray-600
+              ">
+                {item.time}
+              </span>
+
+            </div>
+          ))}
 
         </div>
+
       </section>
+
+
 
       {/* Tomorrow */}
-
       <section>
 
-        <h2 className="mb-4 text-lg font-semibold text-gray-700">
-          فردا
-        </h2>
+        <div className="mb-4 flex items-center gap-2">
 
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+          <CalendarClock
+            size={22}
+            className="text-blue-500"
+          />
 
-          <div className="flex items-center px-5 py-4">
+          <h2 className="text-lg font-semibold text-gray-700">
+            فردا
+          </h2>
 
-            <span className="w-24 font-medium text-gray-500">
-              10:00
-            </span>
+        </div>
 
-            <span>
-              بررسی پروژه جدید
-            </span>
 
-          </div>
+        <div className="space-y-3">
+
+          {tomorrowReminders.map((item) => (
+            <div
+              key={item.time}
+              className="
+              flex items-center justify-between
+              rounded-xl border border-gray-200
+              bg-white px-5 py-4
+              shadow-sm
+              transition
+              hover:border-blue-300
+              hover:shadow-md
+              "
+            >
+
+              <div className="flex items-center gap-4">
+
+                <div className="
+                  flex h-10 w-10 items-center justify-center
+                  rounded-full bg-blue-100
+                ">
+                  <Clock
+                    size={20}
+                    className="text-blue-600"
+                  />
+                </div>
+
+
+                <span className="font-medium text-gray-700">
+                  {item.title}
+                </span>
+
+              </div>
+
+
+              <span className="
+                rounded-lg
+                bg-gray-100
+                px-3 py-1
+                text-sm
+                font-medium
+                text-gray-600
+              ">
+                {item.time}
+              </span>
+
+            </div>
+          ))}
 
         </div>
 
       </section>
 
-       </Page>
+
+    </Page>
   );
 }
