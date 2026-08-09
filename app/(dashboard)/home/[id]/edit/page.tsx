@@ -1,24 +1,26 @@
+"use client";
+
+import { useNotes } from "@/hooks/useNotes";
+import { useRouter, useParams } from "next/navigation";
+
 import Page from "@/components/layout/Page";
 import PageHeader from "@/components/layout/PageHeader";
-
-import { notes } from "@/data/notes";
 import NoteForm from "@/components/notes/NoteForm";
-export function generateStaticParams() {
-  return notes.map((note) => ({
-    id: String(note.id),
-  }));
-}
-export default async function EditPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
 
-  const { id } = await params;
+
+export default function EditPage() {
+
+  const { updateNote, notes } = useNotes();
+
+  const router = useRouter();
+
+  const params = useParams();
+
+  const id = Number(params.id);
 
 
   const note = notes.find(
-    (note) => note.id === Number(id)
+    (note) => note.id === id
   );
 
 
@@ -36,7 +38,20 @@ export default async function EditPage({
       />
 
 
-      <NoteForm note={note} />
+      <NoteForm
+        note={note}
+        onSubmit={(data) => {
+
+          updateNote({
+            id: note.id,
+            ...data,
+          });
+
+          router.push("/home");
+
+        }}
+      />
+
 
     </Page>
   );

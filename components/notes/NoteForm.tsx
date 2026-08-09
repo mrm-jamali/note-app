@@ -1,13 +1,28 @@
+"use client";
+
+import { useState } from "react";
+
 import { Note } from "@/types/note";
 import { Save } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
   note?: Note;
+   onSubmit: (data: Omit<Note, "id">) => void;
 };
 
-export default function NoteForm({ note }: Props) {
+
+export default function NoteForm({ note, onSubmit }: Props) {
   const isEdit = !!note;
+  const [title, setTitle] = useState(note?.title ?? "");
+
+const [description, setDescription] = useState(
+  note?.description ?? ""
+);
+
+const [label, setLabel] = useState(
+  note?.label ?? "کاری"
+);
 
   return (
     <div
@@ -34,8 +49,9 @@ export default function NoteForm({ note }: Props) {
           </label>
 
           <input
-            defaultValue={note?.title ?? ""}
-            placeholder="عنوان یادداشت را وارد کنید"
+             value={title}
+  onChange={(e) => setTitle(e.target.value)}
+    placeholder="عنوان یادداشت را وارد کنید"
             className="
               h-11
               w-full
@@ -63,8 +79,8 @@ export default function NoteForm({ note }: Props) {
           </label>
 
           <textarea
-            defaultValue={note?.description ?? ""}
-            rows={5}
+           value={description}
+  onChange={(e) => setDescription(e.target.value)}
             placeholder="متن یادداشت را وارد کنید"
             className="
               w-full
@@ -94,7 +110,8 @@ export default function NoteForm({ note }: Props) {
           </label>
 
           <select
-            defaultValue={note?.label ?? "کاری"}
+            value={label}
+  onChange={(e) => setLabel(e.target.value)}
             className="
               h-11
               w-full
@@ -153,7 +170,17 @@ export default function NoteForm({ note }: Props) {
         </Link>
 
 
-        <button
+        <button  onClick={() =>
+  onSubmit({
+    title,
+    description,
+    label,
+    color: note?.color ?? "blue",
+    archived: note?.archived ?? false,
+    reminder: note?.reminder ?? null,
+    createdAt: note?.createdAt ?? new Date().toISOString(),
+  })
+}
           className="
             flex
             items-center

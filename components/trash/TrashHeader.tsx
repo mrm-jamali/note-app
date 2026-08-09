@@ -4,7 +4,7 @@ function TrashHeader() {
   return (
     <div className="mb-6 flex flex-col gap-3 md:mb-8">
       <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl lg:text-4xl">
-        Trash
+        سطل زباله
       </h1>
 
       <div className="flex items-start gap-2 text-sm text-gray-500 sm:items-center sm:text-base">
@@ -14,7 +14,7 @@ function TrashHeader() {
         />
 
         <p className="leading-6">
-          Notes in trash are deleted after 30 days
+         یادداشت‌های موجود در سطل زباله پس از ۳۰ روز حذف می‌شوند.
         </p>
       </div>
     </div>

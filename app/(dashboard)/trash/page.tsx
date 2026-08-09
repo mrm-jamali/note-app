@@ -1,19 +1,35 @@
-import React from 'react'
-import Page from '@/components/layout/Page'
-// import PageHeader from '@/components/layout/PageHeader'
-import TrashHeader from '@/components/trash/TrashHeader'
-import TrashRow from '@/components/trash/TrashRow'
-import TrashTable from '@/components/trash/TrashTable'
-import TrashToolbar from '@/components/trash/TrashToolbar'
+"use client";
+
+import Page from "@/components/layout/Page";
+import TrashHeader from "@/components/trash/TrashHeader";
+import TrashToolbar from "@/components/trash/TrashToolbar";
+import TrashTable from "@/components/trash/TrashTable";
+import { useNotes } from "@/hooks/useNotes";
 
 function Trash() {
+  const {
+    notes,
+    restoreFromTrash,
+    permanentlyDeleteNote,
+  } = useNotes();
+
+  const deletedNotes = notes.filter(
+    (note) => note.deleted
+  );
+
   return (
-          <Page>
+    <Page>
       <TrashHeader />
+
       <TrashToolbar />
-      <TrashTable />
+
+      <TrashTable
+        notes={deletedNotes}
+        restoreFromTrash={restoreFromTrash}
+        permanentlyDeleteNote={permanentlyDeleteNote}
+      />
     </Page>
-  )
+  );
 }
 
-export default Trash
+export default Trash;

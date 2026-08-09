@@ -8,8 +8,11 @@ export const notes: Note[] = [
   label: "کاری",
   color: "blue",
   archived: true,
+  deleted: false,
   reminder: "2026-08-08 09:00",
   createdAt: "2026-08-01",
+  
+  deletedAt:null,
 },
 {
   id: 2,
@@ -18,8 +21,10 @@ export const notes: Note[] = [
   label: "شخصی",
   color: "yellow",
   archived: true,
+  deleted: false,
   reminder: "",
   createdAt: "2026-08-01",
+    deletedAt:null,
 },
 {
   id: 3,
@@ -28,8 +33,10 @@ export const notes: Note[] = [
   label: "مطالعه",
   color: "green",
   archived: false,
+  deleted: false,
   reminder: "2026-08-05 14:00",
   createdAt: "2026-08-02",
+    deletedAt:null,
 },
 {
   id: 4,
@@ -38,8 +45,10 @@ export const notes: Note[] = [
   label: "مطالعه",
   color: "purple",
   archived: false,
+  deleted: false,
   reminder: "",
   createdAt: "2026-08-02",
+    deletedAt:null,
 },
 {
   id: 5,
@@ -48,8 +57,10 @@ export const notes: Note[] = [
   label: "سلامتی",
   color: "red",
   archived: false,
+  deleted: false,
   reminder: "2026-08-10 11:00",
   createdAt: "2026-08-02",
+    deletedAt:null,
 },
 ];
 

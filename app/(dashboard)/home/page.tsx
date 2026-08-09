@@ -1,22 +1,32 @@
 "use client";
 import NoteGride from '@/components/notes/NoteGride'
-import NoteHeader from '@/components/notes/NoteHeader'
+// import NoteHeader from '@/components/notes/NoteHeader'
 import Page from '@/components/layout/Page'
 import PageHeader from '@/components/layout/PageHeader'
-import React from 'react'
+// import React from 'react'
 // import SearchBAR from '@/components/SearchBAR'
 import SearchBar from '@/components/notes/SearchBar'
 import NoteFilter from '@/components/notes/NoteFilter'
 import Link from 'next/link'
 import { useState } from "react";
-import { notes } from "@/data/notes";
+import { useNotes } from '@/hooks/useNotes';
+// import { notes } from "@/data/notes";
+
 
 function Home() {
-  
-  const [search, setSearch] = useState("");
-    const filteredNotes = notes.filter((note) =>
+const {
+  notes,
+  deleteNote,
+  archiveNote,
+} = useNotes();
+  const [searchText, setSearchText] = useState("");
+const [search, setSearch] = useState("");
+
+ const filteredNotes = notes.filter(
+  (note) =>
+    !note.archived &&
     note.title.includes(search)
-  );
+);
   return (
     <Page>
       <div className="flex items-center justify-between">
@@ -36,14 +46,19 @@ function Home() {
       {/* <NoteHeader /> */}
 
       <div className=" mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <SearchBar    value={search}
-        onChange={setSearch}/>
+      <SearchBar
+  value={searchText}
+  onChange={setSearchText}
+  onSearch={() => setSearch(searchText)}
+/>
        <div className="flex justify-end">
     <NoteFilter    />
   </div>
       </div>
-
-      <NoteGride notes={filteredNotes} />
+<NoteGride 
+  notes={filteredNotes}
+  deleteNote={deleteNote}  archiveNote={archiveNote}
+/>
     </Page>
   )
 }

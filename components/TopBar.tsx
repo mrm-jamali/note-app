@@ -8,12 +8,14 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import Logout from "./Logout";
+import { format } from "date-fns-jalali";
 type TopBarProps = {
   onMenuClick: () => void;
 };
 
 function TopBar({ onMenuClick }: TopBarProps) {
   const [open, setOpen] = useState(false);
+  const today = format(new Date(), "d MMMM yyyy");
 
   return (
     <>
@@ -51,10 +53,10 @@ function TopBar({ onMenuClick }: TopBarProps) {
           {/* Right */}
           <div className="flex shrink-0 items-center gap-2 md:gap-3">
             {/* Date */}
-            <div className="hidden items-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm text-gray-600 xl:flex">
-              <Calendar size={18} />
-              <span>۵ مرداد ۱۴۰۵</span>
-            </div>
+              <div className="hidden items-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm text-gray-600 xl:flex">
+      <Calendar size={18} />
+      <span>{today}</span>
+    </div>
 
             {/* Notification */}
             <button className="relative rounded-xl p-2 transition hover:bg-gray-100">

@@ -1,59 +1,89 @@
 import TrashRow from "./TrashRow";
+import { Note } from "@/types/note";
 
-const trashNotes = [
-  {
-    id: 1,
-    title: "JavaScript Notes",
-    label: "Programming",
-    deletedAt: "2 days ago",
-    expiresIn: "28 days left",
-  },
-  {
-    id: 2,
-    title: "React Hooks",
-    label: "Frontend",
-    deletedAt: "5 days ago",
-    expiresIn: "25 days left",
-  },
-  {
-    id: 3,
-    title: "Meeting Notes",
-    label: "Work",
-    deletedAt: "1 week ago",
-    expiresIn: "23 days left",
-  },
-  {
-    id: 4,
-    title: "Shopping List",
-    label: "Personal",
-    deletedAt: "10 days ago",
-    expiresIn: "20 days left",
-  },
-];
+type TrashTableProps = {
+  notes: Note[];
+  restoreFromTrash: (id: number) => void;
+  permanentlyDeleteNote: (id: number) => void;
+};
 
-function TrashTable() {
+function TrashTable({
+  notes,
+  restoreFromTrash,
+  permanentlyDeleteNote,
+}: TrashTableProps) {
   return (
-    <div className="mt-6 space-y-4">
+  <div className="mt-6 rounded-2xl bg-slate-50/100 p-4">
       {/* Table Header */}
-      <div className="hidden grid-cols-4 rounded-xl bg-gray-100 px-4 py-3 text-sm font-semibold text-gray-600 md:grid">
-        <p>Note</p>
-        <p>Deleted At</p>
-        <p>Expires In</p>
-        <p className="text-right">Action</p>
-      </div>
+      {notes.length > 0 && (
+        <div
+          className="
+            hidden
+            grid-cols-4
+            items-center
+            gap-5
+            px-5
+            py-3
+            text-xs
+            font-medium
+            text-gray-800
+            md:grid mt-11
+          "
+        >
+          <div>یادداشت</div>
+
+          <div>تاریخ حذف</div>
+
+          <div>منقضی‌شده</div>
+
+          <div className="justify-self-end">
+            گزینه‌ها
+          </div>
+        </div>
+      )}
 
       {/* Rows */}
       <div className="space-y-3">
-        {trashNotes.map((note) => (
-          <TrashRow
-            key={note.id}
-            title={note.title}
-            label={note.label}
-            deletedAt={note.deletedAt}
-            expiresIn={note.expiresIn}
-          />
-        ))}
+        {notes.length === 0 ? (
+          <div
+            className="
+              flex
+              min-h-[220px]
+              flex-col
+              items-center
+              justify-center
+              rounded-2xl
+              border
+              border-dashed
+              border-gray-200
+              bg-gray-50/50
+              text-center
+            "
+          >
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">
+              <span className="text-2xl">🗑️</span>
+            </div>
+
+            <h3 className="text-base font-semibold text-gray-700">
+              سطل زباله خالی است
+            </h3>
+
+            <p className="mt-2 text-sm text-gray-400">
+              یادداشتی در سطل زباله وجود ندارد.
+            </p>
+          </div>
+        ) : (
+          notes.map((note) => (
+            <TrashRow
+              key={note.id}
+              note={note}
+              restoreFromTrash={restoreFromTrash}
+              permanentlyDeleteNote={permanentlyDeleteNote}
+            />
+          ))
+        )}
       </div>
+
     </div>
   );
 }
