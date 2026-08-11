@@ -28,14 +28,14 @@ function TopBar({ onMenuClick }: TopBarProps) {
         }}
       />
 
-      <header className="sticky top-0 z-30 border-b border-gray-200 bg-white">
+      <header className="sticky top-0 z-30 border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-sm">
           <button
   onClick={onMenuClick}
   className="rounded-lg p-2 hover:bg-gray-100 md:hidden"
 >
   ☰
 </button>
-        <div className="flex items-center gap-4 px-4 py-4 md:px-6 lg:px-8">
+        <div className="flex items-center gap-4 px-4 py-4 md:px-6 lg:px-8 ">
           {/* Search */}
           <div className="relative flex-1 max-w-xl">
             <Search
@@ -51,45 +51,52 @@ function TopBar({ onMenuClick }: TopBarProps) {
           </div>
 
           {/* Right */}
-          <div className="flex shrink-0 items-center gap-2 md:gap-3">
-            {/* Date */}
-              <div className="hidden items-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm text-gray-600 xl:flex">
-      <Calendar size={18} />
-      <span>{today}</span>
-    </div>
 
-            {/* Notification */}
-            <button className="relative rounded-xl p-2 transition hover:bg-gray-100">
-              <Bell size={20} />
+<div className="flex flex-1 items-center justify-between">
 
-              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500"></span>
-            </button>
+  {/* Date */}
+  <div className="hidden items-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm text-gray-600 xl:flex">
+    <Calendar size={18} />
+    <span>{today}</span>
+  </div>
 
-            {/* Settings */}
-            <button className="rounded-xl p-2 transition hover:bg-gray-100">
-              <Settings size={20} />
-            </button>
+  {/* Left Group */}
+  <div className="flex items-center gap-2 md:gap-3">
 
-            {/* Profile */}
-            <button
-              onClick={() => setOpen(true)}
-              className="flex items-center gap-3 rounded-xl px-2 py-2 transition hover:bg-gray-100 md:px-3"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 font-semibold text-orange-600">
-                M
-              </div>
+    {/* Notification */}
+    <button className="relative rounded-xl p-2 transition hover:bg-gray-100">
+      <Bell size={20} />
 
-              <div className="hidden text-right lg:block">
-                <p className="text-sm font-semibold">
-                  Maryam
-                </p>
+      <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500"></span>
+    </button>
 
-                <p className="text-xs text-gray-500">
-                  Frontend Developer
-                </p>
-              </div>
-            </button>
-          </div>
+    {/* Settings */}
+    <button className="rounded-xl p-2 transition hover:bg-gray-100">
+      <Settings size={20} />
+    </button>
+
+    {/* Profile */}
+    <button
+      onClick={() => setOpen(true)}
+      className="flex items-center gap-3 rounded-xl px-2 py-2 transition hover:bg-gray-100 md:px-3"
+    >
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 font-semibold text-orange-600">
+        M
+      </div>
+
+      <div className="hidden text-right lg:block">
+        <p className="text-sm font-semibold">
+          Maryam
+        </p>
+
+        <p className="text-xs text-gray-500">
+          Frontend Developer
+        </p>
+      </div>
+    </button>
+
+  </div>
+</div>
         </div>
       </header>
     </>

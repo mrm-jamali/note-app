@@ -5,24 +5,27 @@ import { useState } from "react";
 import { Note } from "@/types/note";
 import { Save } from "lucide-react";
 import Link from "next/link";
+import { useLabels } from "@/hooks/useLabels";
+import LabelPicker from "@/components/labels/LabelPicker";
+
 
 type Props = {
   note?: Note;
-   onSubmit: (data: Omit<Note, "id">) => void;
+  onSubmit: (data: Omit<Note, "id">) => void;
 };
 
-
 export default function NoteForm({ note, onSubmit }: Props) {
+  const { labels } = useLabels();
   const isEdit = !!note;
   const [title, setTitle] = useState(note?.title ?? "");
-
-const [description, setDescription] = useState(
-  note?.description ?? ""
+  const [color, setColor] = useState<Note["color"]>(note?.color ?? "blue");
+  const [reminder, setReminder] = useState(
+  note?.reminder ?? ""
 );
 
-const [label, setLabel] = useState(
-  note?.label ?? "کاری"
-);
+  const [description, setDescription] = useState(note?.description ?? "");
+
+  const [label, setLabel] = useState(note?.label ?? "");
 
   return (
     <div
@@ -39,9 +42,7 @@ const [label, setLabel] = useState(
         sm:p-6
       "
     >
-
       <div className="space-y-5">
-
         {/* Title */}
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -49,9 +50,9 @@ const [label, setLabel] = useState(
           </label>
 
           <input
-             value={title}
-  onChange={(e) => setTitle(e.target.value)}
-    placeholder="عنوان یادداشت را وارد کنید"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="عنوان یادداشت را وارد کنید"
             className="
               h-11
               w-full
@@ -71,7 +72,6 @@ const [label, setLabel] = useState(
           />
         </div>
 
-
         {/* Description */}
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -79,8 +79,8 @@ const [label, setLabel] = useState(
           </label>
 
           <textarea
-           value={description}
-  onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             placeholder="متن یادداشت را وارد کنید"
             className="
               w-full
@@ -102,42 +102,86 @@ const [label, setLabel] = useState(
           />
         </div>
 
-
         {/* Label */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            برچسب
-          </label>
+       
+          <div className="relative">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                برچسب
+              </label>
 
-          <select
-            value={label}
-  onChange={(e) => setLabel(e.target.value)}
-            className="
-              h-11
-              w-full
-              rounded-xl
-              border
-              border-gray-200
-              bg-gray-50
-              px-4
-              text-sm
-              outline-none
-              transition
-              focus:border-orange-500
-              focus:bg-white
-              focus:ring-2
-              focus:ring-orange-100
-            "
-          >
-            <option>کاری</option>
-            <option>شخصی</option>
-            <option>مطالعه</option>
-            <option>سلامتی</option>
-          </select>
+              <LabelPicker labels={labels} value={label} onChange={setLabel} />
+            </div>
+
+         
+          </div>
         </div>
+        {/* Note Color */}
+<div>
+  <label className="mb-3 block text-sm font-medium text-gray-700">
+    رنگ یادداشت
+  </label>
 
+  <div className="flex flex-wrap gap-3">
+    {[
+      { name: "red", className: "bg-red-300", ring: "ring-red-500" },
+      { name: "yellow", className: "bg-yellow-300", ring: "ring-yellow-500" },
+      { name: "green", className: "bg-green-300", ring: "ring-green-500" },
+      { name: "blue", className: "bg-blue-300", ring: "ring-blue-500" },
+      { name: "purple", className: "bg-purple-300", ring: "ring-purple-500" },
+    ].map((item) => (
+      <button
+        key={item.name}
+        type="button"
+        onClick={() => setColor(item.name as Note["color"])}
+        className={`
+          h-10
+          w-10
+          rounded-full
+          ${item.className}
+          transition
+          hover:scale-110
+          ${
+            color === item.name
+              ? `ring-2 ${item.ring} ring-offset-2`
+              : ""
+          }
+        `}
+        title={`رنگ ${item.name}`}
+      />
+    ))}
+  </div>
+</div>
       </div>
+      {/* Reminder */}
+<div>
+  <label className="mb-2 block text-sm font-medium text-gray-700">
+    یادآوری
+  </label>
 
+  <input
+    type="datetime-local"
+    value={reminder}
+    onChange={(e) => setReminder(e.target.value)}
+    className="
+      h-11
+      w-full
+      rounded-xl
+      border
+      border-gray-200
+      bg-gray-50
+      px-4
+      text-sm
+      outline-none
+      transition
+      focus:border-orange-500
+      focus:bg-white
+      focus:ring-2
+      focus:ring-orange-100
+    "
+  />
+</div>
 
       {/* Actions */}
       <div
@@ -150,7 +194,6 @@ const [label, setLabel] = useState(
           sm:justify-end
         "
       >
-
         <Link
           href="/home"
           className="
@@ -169,18 +212,20 @@ const [label, setLabel] = useState(
           لغو
         </Link>
 
-
-        <button  onClick={() =>
-  onSubmit({
-    title,
-    description,
-    label,
-    color: note?.color ?? "blue",
-    archived: note?.archived ?? false,
-    reminder: note?.reminder ?? null,
-    createdAt: note?.createdAt ?? new Date().toISOString(),
-  })
-}
+        <button
+          onClick={() =>
+        onSubmit({
+  title,
+  description,
+  label,
+  color,
+  archived: note?.archived ?? false,
+  deleted: note?.deleted ?? false,
+  reminder: reminder || null,
+  createdAt: note?.createdAt ?? new Date().toISOString(),
+  deletedAt: note?.deletedAt ?? null,
+})
+          }
           className="
             flex
             items-center
@@ -200,11 +245,8 @@ const [label, setLabel] = useState(
           <Save size={17} />
 
           {isEdit ? "ذخیره تغییرات" : "ایجاد یادداشت"}
-
         </button>
-
       </div>
-
     </div>
   );
 }
