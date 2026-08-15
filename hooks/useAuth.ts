@@ -8,6 +8,11 @@ type User = {
   password: string;
 };
 
+const DEMO_USER = {
+  username: "demo",
+  password: "123",
+};
+
 export function useAuth() {
   const [error, setError] = useState("");
 
@@ -40,10 +45,23 @@ export function useAuth() {
     username: string,
     password: string
   ) => {
+
+    // ورود با حساب Demo
+    if (
+      username === DEMO_USER.username &&
+      password === DEMO_USER.password
+    ) {
+      localStorage.setItem("isLoggedIn", "true");
+      setError("");
+
+      return true;
+    }
+
+    // ورود با حساب ثبت‌نام شده
     const storedUser = localStorage.getItem("user");
 
     if (!storedUser) {
-      setError("ابتدا باید ثبت نام کنید.");
+      setError("نام کاربری یا رمز عبور اشتباه است.");
       return false;
     }
 

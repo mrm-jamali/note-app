@@ -229,6 +229,25 @@ onChange={(e) => setUsername(e.target.value)}
                   ثبت نام کنید
                 </Link>
               </div>
+              {/* Demo Account */}
+<div className="mt-6 rounded-2xl border border-orange-200 bg-orange-50 p-4 text-center">
+  
+  <p className="mt-3 text-sm text-gray-600">
+    نام کاربری:
+    <span className="mr-1 font-semibold text-gray-900">
+      demo
+    </span>
+  </p>
+
+  <p className="mt-1 text-sm text-gray-600">
+    رمز عبور:
+    <span className="mr-1 font-semibold text-gray-900">
+      123
+    </span>
+  </p>
+
+  
+</div>
 
             </div>
           </div>
