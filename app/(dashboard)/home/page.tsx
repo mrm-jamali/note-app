@@ -18,6 +18,7 @@ const {
   notes,
   deleteNote,
   archiveNote,
+   restoreNote,
 } = useNotes();
   const [searchText, setSearchText] = useState("");
 const [search, setSearch] = useState("");
@@ -57,7 +58,7 @@ const [search, setSearch] = useState("");
       </div>
 <NoteGride 
   notes={filteredNotes}
-  deleteNote={deleteNote}  archiveNote={archiveNote}
+  deleteNote={deleteNote}  archiveNote={archiveNote}  restoreNote={restoreNote}
 />
     </Page>
   )

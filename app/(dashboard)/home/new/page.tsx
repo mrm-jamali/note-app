@@ -23,7 +23,7 @@ export default function NewNotePage() {
         <NoteForm
           onSubmit={(data) => {
             addNote({
-              id: Date.now(),
+              
               ...data,
             });
 
