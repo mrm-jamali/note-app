@@ -156,7 +156,7 @@ export default function NoteForm({ note, onSubmit }: Props) {
       </div>
       {/* Reminder */}
 <div>
-  <label className="mb-2 block text-sm font-medium text-gray-700">
+  <label className="mb-2 block text-sm font-medium text-gray-700 mt-2">
     یادآوری
   </label>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Sidebar from "@/components/Sidebar";
-import TopBar from "@/components/TopBar";
+import TopBar from "@/components/layout/TopBar";
 import AuthGuard from "@/components/auth/AuthGuard";
 import { useState } from "react";
 

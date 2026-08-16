@@ -16,6 +16,7 @@ import { useNotes } from '@/hooks/useNotes';
 function Home() {
 const {
   notes,
+    updateNote,
   deleteNote,
   archiveNote,
    restoreNote,
@@ -57,7 +58,7 @@ const [search, setSearch] = useState("");
   </div>
       </div>
 <NoteGride 
-  notes={filteredNotes}
+  notes={filteredNotes}   updateNote={updateNote}
   deleteNote={deleteNote}  archiveNote={archiveNote}  restoreNote={restoreNote}
 />
     </Page>

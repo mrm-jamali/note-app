@@ -5,17 +5,30 @@ import {
   Calendar,
   Search,
   Settings,
+  
 } from "lucide-react";
 import { useState } from "react";
-import Logout from "./Logout";
+import Logout from "../Logout";
 import { format } from "date-fns-jalali";
+import { useNotifications } from "@/hooks/useNotifications";
+import { useNotes } from "@/hooks/useNotes";
+
+import NotificationPanel from "../notifications/NotificationPanel";
 type TopBarProps = {
   onMenuClick: () => void;
 };
 
 function TopBar({ onMenuClick }: TopBarProps) {
   const [open, setOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const { notes } = useNotes();
+  const { notifications } = useNotifications();
   const today = format(new Date(), "d MMMM yyyy");
+
+const unreadCount = notifications.filter(
+  (notification) => !notification.read
+).length;
+
 
   return (
     <>
@@ -63,12 +76,27 @@ function TopBar({ onMenuClick }: TopBarProps) {
   {/* Left Group */}
   <div className="flex items-center gap-2 md:gap-3">
 
-    {/* Notification */}
-    <button className="relative rounded-xl p-2 transition hover:bg-gray-100">
-      <Bell size={20} />
 
-      <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500"></span>
-    </button>
+{/* Notification */}
+<div className="relative">
+<button
+  onClick={() => setShowNotifications((prev) => !prev)}
+  className="relative rounded-xl p-2 transition hover:bg-gray-100"
+  title="اعلان‌ها"
+>
+  <Bell size={20} />
+
+  {unreadCount > 0 && (
+    <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
+  )}
+</button>
+
+  {showNotifications && (
+    <NotificationPanel
+      onClose={() => setShowNotifications(false)}
+    />
+  )}
+</div>
 
     {/* Settings */}
     <button className="rounded-xl p-2 transition hover:bg-gray-100">

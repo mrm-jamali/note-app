@@ -7,6 +7,7 @@ import { Note } from "@/types/note";
 
 type Props = {
   notes: Note[];
+    updateNote: (updatedNote: Note) => void;
   deleteNote: (id:number)=>void;
   archiveNote: (id:number)=>void;
    restoreNote: (id: number) => void;
@@ -14,6 +15,7 @@ type Props = {
 
 function NoteGride({
   notes,
+    updateNote,
   deleteNote,
   archiveNote,
   restoreNote,
@@ -28,7 +30,7 @@ function NoteGride({
             note={note}
             deleteNote={deleteNote}
             archiveNote={archiveNote}
-            restoreNote={restoreNote}
+            restoreNote={restoreNote}  updateNote={updateNote}
           />
         ))}
      
