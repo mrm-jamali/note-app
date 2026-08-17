@@ -11,6 +11,7 @@ const {
   deleteNote,
   archiveNote,
   restoreNote,
+  updateNote,
 } = useNotes();
 
   const archivedNotes = notes.filter(
@@ -34,7 +35,7 @@ const {
   archived
   deleteNote={deleteNote}
   archiveNote={archiveNote}
-  restoreNote={restoreNote}
+  restoreNote={restoreNote} updateNote={updateNote}
 />
           
         ))}

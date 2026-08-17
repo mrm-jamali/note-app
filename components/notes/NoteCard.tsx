@@ -36,7 +36,7 @@ function NoteCard({
   note,
   archived = false,
   deleteNote,
-    updateNote,
+  updateNote,
   archiveNote,
   restoreNote,
 }: NoteCardProps) {
@@ -44,7 +44,7 @@ function NoteCard({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showReminder, setShowReminder] = useState(false);
   const [reminderDate, setReminderDate] = useState("");
-const [reminderTime, setReminderTime] = useState("");
+  const [reminderTime, setReminderTime] = useState("");
 
   const reminderRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -66,17 +66,17 @@ const [reminderTime, setReminderTime] = useState("");
 
   const selectedLabel = labels.find((item) => item.name === note.label);
   const saveReminder = () => {
-  if (!reminderDate || !reminderTime) return;
+    if (!reminderDate || !reminderTime) return;
 
-  const reminder = `${reminderDate}T${reminderTime}`;
+    const reminder = `${reminderDate}T${reminderTime}`;
 
-  updateNote({
-    ...note,
-    reminder,
-  });
+    updateNote({
+      ...note,
+      reminder,
+    });
 
-  setShowReminder(false);
-};
+    setShowReminder(false);
+  };
 
   return (
     <div
@@ -134,20 +134,20 @@ const [reminderTime, setReminderTime] = useState("");
             <div ref={reminderRef} className="relative">
               <button
                 type="button"
-        onClick={() => {
-  if (note.reminder) {
-    const date = note.reminder.slice(0, 10);
-    const time = note.reminder.slice(11, 16);
+                onClick={() => {
+                  if (note.reminder) {
+                    const date = note.reminder.slice(0, 10);
+                    const time = note.reminder.slice(11, 16);
 
-    setReminderDate(date);
-    setReminderTime(time);
-  } else {
-    setReminderDate("");
-    setReminderTime("");
-  }
+                    setReminderDate(date);
+                    setReminderTime(time);
+                  } else {
+                    setReminderDate("");
+                    setReminderTime("");
+                  }
 
-  setShowReminder((prev) => !prev);
-}}
+                  setShowReminder((prev) => !prev);
+                }}
                 className="relative rounded-lg p-1.5 text-gray-600 transition hover:bg-yellow-100 hover:text-yellow-600"
                 title="یادآوری"
               >
@@ -157,73 +157,73 @@ const [reminderTime, setReminderTime] = useState("");
                 )}
               </button>
 
-            {showReminder && (
-  <div className="absolute bottom-full right-0 z-50 mb-2 w-64 rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
-    <div className="flex items-center gap-2">
-      <Bell size={16} className="text-yellow-500" />
+              {showReminder && (
+                <div className="absolute bottom-full right-0 z-50 mb-2 w-64 rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+                  <div className="flex items-center gap-2">
+                    <Bell size={16} className="text-yellow-500" />
 
-      <span className="text-sm font-semibold text-gray-700">
-        {note.reminder ? "ویرایش یادآوری" : "ایجاد یادآوری"}
-      </span>
-    </div>
+                    <span className="text-sm font-semibold text-gray-700">
+                      {note.reminder ? "ویرایش یادآوری" : "ایجاد یادآوری"}
+                    </span>
+                  </div>
 
-    <div className="mt-4 space-y-3">
-      <div>
-        <label className="mb-1 block text-xs text-gray-500">
-          تاریخ
-        </label>
+                  <div className="mt-4 space-y-3">
+                    <div>
+                      <label className="mb-1 block text-xs text-gray-500">
+                        تاریخ
+                      </label>
 
-        <input
-          type="date"
-          value={reminderDate}
-          onChange={(e) => setReminderDate(e.target.value)}
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-yellow-400"
-        />
-      </div>
+                      <input
+                        type="date"
+                        value={reminderDate}
+                        onChange={(e) => setReminderDate(e.target.value)}
+                        className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-yellow-400"
+                      />
+                    </div>
 
-      <div>
-        <label className="mb-1 block text-xs text-gray-500">
-          ساعت
-        </label>
+                    <div>
+                      <label className="mb-1 block text-xs text-gray-500">
+                        ساعت
+                      </label>
 
-        <input
-          type="time"
-          value={reminderTime}
-          onChange={(e) => setReminderTime(e.target.value)}
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-yellow-400"
-        />
-      </div>
+                      <input
+                        type="time"
+                        value={reminderTime}
+                        onChange={(e) => setReminderTime(e.target.value)}
+                        className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-yellow-400"
+                      />
+                    </div>
 
-      <button
-        type="button"
-        onClick={saveReminder}
-        disabled={!reminderDate || !reminderTime}
-        className="w-full rounded-lg bg-yellow-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-  {note.reminder ? "ویرایش یادآوری" : "ثبت یادآوری"}        
-      </button>
+                    <button
+                      type="button"
+                      onClick={saveReminder}
+                      disabled={!reminderDate || !reminderTime}
+                      className="w-full rounded-lg bg-yellow-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {note.reminder ? "ویرایش یادآوری" : "ثبت یادآوری"}
+                    </button>
 
-      {note.reminder && (
-        <button
-          type="button"
-          onClick={() => {
-            updateNote({
-              ...note,
-              reminder: null,
-            });
+                    {note.reminder && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          updateNote({
+                            ...note,
+                            reminder: null,
+                          });
 
-            setReminderDate("");
-            setReminderTime("");
-            setShowReminder(false);
-          }}
-          className="w-full rounded-lg px-3 py-2 text-sm text-red-500 transition hover:bg-red-50"
-        >
-          حذف یادآوری
-        </button>
-      )}
-    </div>
-  </div>
-)}
+                          setReminderDate("");
+                          setReminderTime("");
+                          setShowReminder(false);
+                        }}
+                        className="w-full rounded-lg px-3 py-2 text-sm text-red-500 transition hover:bg-red-50"
+                      >
+                        حذف یادآوری
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             <Link href={`/home/${note.id}/edit`}>
