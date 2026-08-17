@@ -13,15 +13,32 @@ export type Notification = {
 
 export function useNotifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
-
-  useEffect(() => {
+useEffect(() => {
+  const loadNotifications = () => {
     const storedNotifications =
       localStorage.getItem("notifications");
 
     if (storedNotifications) {
       setNotifications(JSON.parse(storedNotifications));
+    } else {
+      setNotifications([]);
     }
-  }, []);
+  };
+
+  loadNotifications();
+
+  window.addEventListener(
+    "notificationsUpdated",
+    loadNotifications
+  );
+
+  return () => {
+    window.removeEventListener(
+      "notificationsUpdated",
+      loadNotifications
+    );
+  };
+}, []);
 
   const addNotification = (
     type: Notification["type"],
@@ -49,6 +66,7 @@ export function useNotifications() {
       "notifications",
       JSON.stringify(updatedNotifications)
     );
+    window.dispatchEvent(new Event("notificationsUpdated"));
   };
 
   const markAsRead = (id: number) => {
@@ -68,6 +86,7 @@ export function useNotifications() {
       "notifications",
       JSON.stringify(updatedNotifications)
     );
+    window.dispatchEvent(new Event("notificationsUpdated"));
   };
 
   const markAllAsRead = () => {
@@ -84,6 +103,7 @@ export function useNotifications() {
       "notifications",
       JSON.stringify(updatedNotifications)
     );
+    window.dispatchEvent(new Event("notificationsUpdated"));
   };
 
   const deleteNotification = (id: number) => {
@@ -97,6 +117,7 @@ export function useNotifications() {
       "notifications",
       JSON.stringify(updatedNotifications)
     );
+    window.dispatchEvent(new Event("notificationsUpdated"));
   };
 
   return {

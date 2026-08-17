@@ -23,11 +23,15 @@ const {
 } = useNotes();
   const [searchText, setSearchText] = useState("");
 const [search, setSearch] = useState("");
+const [selectedLabel, setSelectedLabel] = useState("");
 
- const filteredNotes = notes.filter(
+const filteredNotes = notes.filter(
   (note) =>
     !note.archived &&
-    note.title.includes(search)
+    note.title.includes(search) &&
+    (selectedLabel === "" ||
+      (selectedLabel === "hasLabel" && note.label) ||
+      (selectedLabel === "noLabel" && !note.label))
 );
   return (
     <Page>
@@ -54,7 +58,10 @@ const [search, setSearch] = useState("");
   onSearch={() => setSearch(searchText)}
 />
        <div className="flex justify-end">
-    <NoteFilter    />
+  <NoteFilter
+  value={selectedLabel}
+  onChange={setSelectedLabel}
+/>
   </div>
       </div>
 <NoteGride 

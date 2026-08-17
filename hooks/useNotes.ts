@@ -107,6 +107,18 @@ const deleteNote = (id: number) => {
     );
   };
 
+
+  const emptyTrash = () => {
+  const updatedNotes = notes.filter((note) => !note.deleted);
+
+  setNotes(updatedNotes);
+
+  localStorage.setItem(
+    "notes",
+    JSON.stringify(updatedNotes)
+  );
+};
+
   // بازگرداندن از Trash
   const restoreFromTrash = (id: number) => {
     const updatedNotes = notes.map((note) =>
@@ -182,6 +194,7 @@ const restoreNote = (id: number) => {
     archiveNote,
     restoreNote,
     restoreFromTrash,
+    emptyTrash
 
   };
 }

@@ -2,25 +2,27 @@
 
 import { Trash2, X } from "lucide-react";
 
-
 type Props = {
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  title?: string;
-};
 
+  title?: string;
+  message?: string;
+  confirmText?: string;
+  cancelText?: string;
+};
 
 export default function DeleteConfirmModal({
   open,
   onClose,
   onConfirm,
-  title = "این یادداشت",
+  title = "حذف یادداشت",
+  message = "آیا مطمئنی می‌خواهی این یادداشت را حذف کنی؟",
+  confirmText = "حذف",
+  cancelText = "انصراف",
 }: Props) {
-
-
   if (!open) return null;
-
 
   return (
     <div
@@ -36,8 +38,6 @@ export default function DeleteConfirmModal({
       "
       dir="rtl"
     >
-
-
       <div
         className="
           w-full
@@ -48,13 +48,8 @@ export default function DeleteConfirmModal({
           shadow-xl
         "
       >
-
-
         {/* Header */}
-
-        <div className="flex justify-between items-center mb-4">
-
-
+        <div className="mb-4 flex items-center justify-between">
           <div
             className="
               flex
@@ -72,8 +67,6 @@ export default function DeleteConfirmModal({
             />
           </div>
 
-
-
           <button
             onClick={onClose}
             className="
@@ -82,41 +75,21 @@ export default function DeleteConfirmModal({
               hover:bg-gray-100
             "
           >
-            <X size={20}/>
+            <X size={20} />
           </button>
-
-
         </div>
 
-
-
         {/* Content */}
-
         <h2 className="mb-2 text-lg font-bold">
-          حذف یادداشت
+          {title}
         </h2>
 
-
         <p className="mb-6 text-sm text-gray-500">
-          آیا مطمئنی می‌خواهی 
-          <span className="font-medium text-gray-700">
-            {" "}{title}
-          </span>
-          {" "}
-          را حذف کنی؟
+          {message}
         </p>
 
-
-
         {/* Actions */}
-
-        <div
-          className="
-            flex
-            gap-3
-          "
-        >
-
+        <div className="flex gap-3">
           <button
             onClick={onClose}
             className="
@@ -128,10 +101,8 @@ export default function DeleteConfirmModal({
               hover:bg-gray-100
             "
           >
-            انصراف
+            {cancelText}
           </button>
-
-
 
           <button
             onClick={onConfirm}
@@ -144,16 +115,10 @@ export default function DeleteConfirmModal({
               hover:bg-red-600
             "
           >
-            حذف
+            {confirmText}
           </button>
-
-
         </div>
-
-
       </div>
-
-
     </div>
   );
 }
