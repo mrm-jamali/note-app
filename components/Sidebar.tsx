@@ -61,7 +61,7 @@ function Sidebar({ open, onClose }: SidebarProps) {
 <div
   className={`
     fixed top-0 right-0 z-50
-    flex h-screen w-64 flex-col
+    flex min-h-screen w-64 flex-col
     border-l border-gray-200
     bg-orange-100
     shadow-sm

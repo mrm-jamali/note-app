@@ -40,34 +40,45 @@ useEffect(() => {
   };
 }, []);
 
-  const addNotification = (
-    type: Notification["type"],
-    title: string,
-    message: string
-  ) => {
-    const newNotification: Notification = {
-      id: Date.now(),
-      type,
-      title,
-      message,
-      createdAt: new Date().toISOString(),
-      read: false,
-    };
+ const addNotification = (
+  type: Notification["type"],
+  title: string,
+  message: string
+) => {
+  const notificationsEnabled =
+    localStorage.getItem("notificationsEnabled");
 
-    const updatedNotifications = [
-      newNotification,
-      ...notifications,
-    ];
-    console.log("NEW NOTIFICATION:", newNotification);
+  if (notificationsEnabled === "false") {
+    return;
+  }
 
-    setNotifications(updatedNotifications);
-
-    localStorage.setItem(
-      "notifications",
-      JSON.stringify(updatedNotifications)
-    );
-    window.dispatchEvent(new Event("notificationsUpdated"));
+  const newNotification: Notification = {
+    id: Date.now(),
+    type,
+    title,
+    message,
+    createdAt: new Date().toISOString(),
+    read: false,
   };
+
+  const updatedNotifications = [
+    newNotification,
+    ...notifications,
+  ];
+
+  console.log("NEW NOTIFICATION:", newNotification);
+
+  setNotifications(updatedNotifications);
+
+  localStorage.setItem(
+    "notifications",
+    JSON.stringify(updatedNotifications)
+  );
+
+  window.dispatchEvent(
+    new Event("notificationsUpdated")
+  );
+};
 
   const markAsRead = (id: number) => {
     const updatedNotifications = notifications.map(

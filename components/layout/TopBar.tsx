@@ -3,7 +3,7 @@
 import {
   Bell,
   Calendar,
-  Search,
+
   Settings,
   
 } from "lucide-react";
@@ -11,7 +11,9 @@ import { useState } from "react";
 import Logout from "../Logout";
 import { format } from "date-fns-jalali";
 import { useNotifications } from "@/hooks/useNotifications";
-import { useNotes } from "@/hooks/useNotes";
+import { useRouter } from "next/navigation";
+
+import SearchBar from "../notes/SearchBar";
 
 import NotificationPanel from "../notifications/NotificationPanel";
 type TopBarProps = {
@@ -21,10 +23,17 @@ type TopBarProps = {
 function TopBar({ onMenuClick }: TopBarProps) {
   const [open, setOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const { notes } = useNotes();
+ 
   const { notifications } = useNotifications();
   const today = format(new Date(), "d MMMM yyyy");
+  const [search, setSearch] = useState("");
+  console.log("search:", search);
+  const router = useRouter();
+const handleSearch = () => {
+  if (!search.trim()) return;
 
+  router.push(`/search?q=${encodeURIComponent(search.trim())}`);
+};
 const unreadCount = notifications.filter(
   (notification) => !notification.read
 ).length;
@@ -49,19 +58,15 @@ const unreadCount = notifications.filter(
   ☰
 </button>
         <div className="flex items-center gap-4 px-4 py-4 md:px-6 lg:px-8 ">
-          {/* Search */}
-          <div className="relative flex-1 max-w-xl">
-            <Search
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-
-            <input
-              type="text"
-              placeholder="جستجو در یادداشت‌ها..."
-              className="h-11 w-full rounded-xl border border-gray-200 bg-gray-50 pl-11 pr-4 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
-            />
-          </div>
+       
+         {/* Search */}
+<div className="flex-1 max-w-xl">
+  <SearchBar
+    value={search}
+    onChange={setSearch}
+    onSearch={handleSearch}
+  />
+</div>
 
           {/* Right */}
 
@@ -98,10 +103,14 @@ const unreadCount = notifications.filter(
   )}
 </div>
 
-    {/* Settings */}
-    <button className="rounded-xl p-2 transition hover:bg-gray-100">
-      <Settings size={20} />
-    </button>
+{/* Settings */}
+<button
+  onClick={() => router.push("/setting")}
+  className="rounded-xl p-2 transition hover:bg-gray-100"
+  title="تنظیمات"
+>
+  <Settings size={20} />
+</button>
 
     {/* Profile */}
     <button
