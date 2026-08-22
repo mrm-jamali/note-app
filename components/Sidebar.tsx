@@ -52,7 +52,7 @@ function Sidebar({ open, onClose }: SidebarProps) {
     {open && (
       <div
         onClick={onClose}
-        className="fixed inset-0 z-40 bg-black/30 md:hidden"
+        className="fixed inset-0 z-40 bg-black/30 lg:hidden"
       />
     )}
 
@@ -61,7 +61,8 @@ function Sidebar({ open, onClose }: SidebarProps) {
 <div
   className={`
     fixed top-0 right-0 z-50
-   flex h-dvh w-64 flex-col
+    flex h-dvh w-64 flex-col
+    overflow-y-auto
     border-l border-gray-200
     bg-orange-100
     shadow-sm
@@ -69,8 +70,9 @@ function Sidebar({ open, onClose }: SidebarProps) {
 
     ${open ? "translate-x-0" : "translate-x-full"}
 
-    md:static
-    md:translate-x-0
+    lg:static
+    lg:h-dvh
+    lg:translate-x-0
   `}
 >
   {/* Logo */}

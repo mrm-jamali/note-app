@@ -6,7 +6,7 @@ import Logout from "../Logout";
 import { format } from "date-fns-jalali";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useRouter } from "next/navigation";
-import SearchBar from "../notes/SearchBar";
+import TopBarSearch from "../TopBarSearch";
 import NotificationPanel from "../notifications/NotificationPanel";
 
 type TopBarProps = {
@@ -22,11 +22,16 @@ function TopBar({ onMenuClick }: TopBarProps) {
   const today = format(new Date(), "d MMMM yyyy");
   const router = useRouter();
 
-  const handleSearch = () => {
-    if (!search.trim()) return;
+const handleSearch = () => {
+  const query = search.trim();
 
-    router.push(`/search?q=${encodeURIComponent(search.trim())}`);
-  };
+  if (!query) {
+    router.push("/home");
+    return;
+  }
+
+  router.push(`/search?q=${encodeURIComponent(query)}`);
+};
 
   const unreadCount = notifications.filter(
     (notification) => !notification.read,
@@ -45,10 +50,8 @@ function TopBar({ onMenuClick }: TopBarProps) {
 
       <header className="sticky top-0 z-30 border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-sm">
         <div className="px-4 py-3 md:px-6 lg:px-8">
-
           {/* Top row */}
           <div className="flex items-center gap-4">
-
             {/* Mobile Menu */}
             <button
               type="button"
@@ -60,7 +63,7 @@ function TopBar({ onMenuClick }: TopBarProps) {
 
             {/* Search - Desktop */}
             <div className="hidden flex-1 md:block">
-              <SearchBar
+              <TopBarSearch
                 value={search}
                 onChange={setSearch}
                 onSearch={handleSearch}
@@ -75,14 +78,11 @@ function TopBar({ onMenuClick }: TopBarProps) {
 
             {/* Notification + Settings */}
             <div className="flex items-center gap-2 md:gap-3">
-
               {/* Notification */}
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() =>
-                    setShowNotifications((prev) => !prev)
-                  }
+                  onClick={() => setShowNotifications((prev) => !prev)}
                   className="relative cursor-pointer rounded-xl p-2 transition hover:bg-gray-100"
                   title="اعلان‌ها"
                 >
@@ -122,26 +122,21 @@ function TopBar({ onMenuClick }: TopBarProps) {
               </div>
 
               <div className="hidden text-right lg:block">
-                <p className="text-sm font-semibold">
-                  Maryam
-                </p>
+                <p className="text-sm font-semibold">Maryam</p>
 
-                <p className="text-xs text-gray-500">
-                  Frontend Developer
-                </p>
+                <p className="text-xs text-gray-500">Frontend Developer</p>
               </div>
             </button>
           </div>
 
           {/* Search - Mobile */}
           <div className="mt-3 w-full md:hidden">
-            <SearchBar
+            <TopBarSearch
               value={search}
               onChange={setSearch}
               onSearch={handleSearch}
             />
           </div>
-
         </div>
       </header>
     </>
