@@ -11,7 +11,7 @@ type TrashToolbarProps = {
   onSearch: () => void;
   filter: string;
   onFilterChange: (value: string) => void;
-   onEmptyTrash: () => void;
+  onEmptyTrash: () => void;
 };
 
 function TrashToolbar({
@@ -20,51 +20,65 @@ function TrashToolbar({
   onSearch,
   filter,
   onFilterChange,
-    onEmptyTrash,
+  onEmptyTrash,
 }: TrashToolbarProps) {
-  const [showEmptyTrashModal, setShowEmptyTrashModal] = useState(false);
+  const [showEmptyTrashModal, setShowEmptyTrashModal] =
+    useState(false);
+
   return (
-    <div className="flex items-center justify-between gap-4">
+    <>
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 
-      <SearchBar
-        value={search}
-        onChange={onSearchChange}
-        onSearch={onSearch}
+        {/* Search */}
+        <div className="w-full md:w-auto">
+          <SearchBar
+            value={search}
+            onChange={onSearchChange}
+            onSearch={onSearch}
+          />
+        </div>
+
+        {/* Filter + Actions */}
+        <div className="flex w-full items-center justify-between gap-3 md:w-auto md:justify-end">
+
+          <NoteFilter
+            value={filter}
+            onChange={onFilterChange}
+          />
+
+          <button
+            type="button"
+            onClick={() => setShowEmptyTrashModal(true)}
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition hover:bg-red-50 hover:text-red-600"
+            title="خالی کردن سطل زباله"
+          >
+            <Trash2 size={20} />
+          </button>
+
+          {/* <button
+            type="button"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white transition hover:bg-gray-100"
+            title="بیشتر"
+          >
+            <MoreVertical size={20} />
+          </button> */}
+
+        </div>
+      </div>
+
+      <DeleteConfirmModal
+        open={showEmptyTrashModal}
+        title="خالی کردن سطل زباله"
+        message="آیا مطمئنی می‌خواهی تمام یادداشت‌های سطل زباله را برای همیشه حذف کنی؟ این عملیات قابل بازگشت نیست."
+        confirmText="خالی کردن سطل"
+        cancelText="انصراف"
+        onClose={() => setShowEmptyTrashModal(false)}
+        onConfirm={() => {
+          onEmptyTrash();
+          setShowEmptyTrashModal(false);
+        }}
       />
-
-      <div className="flex items-center gap-3">
-  <NoteFilter
-    value={filter}
-    onChange={onFilterChange}
-  />
-
-<button
-  onClick={() => setShowEmptyTrashModal(true)}
-  className="flex h-12 w-12 items-center justify-center rounded-xl border border-gray-200 bg-white transition hover:bg-red-50 hover:text-red-600"
-  title="خالی کردن سطل زباله"
->
-  <Trash2 size={20} />
-</button>
-  <button
-    className="flex h-12 w-12 items-center justify-center rounded-xl bg-white transition hover:bg-gray-100"
-    title="بیشتر"
-  >
-    <MoreVertical size={20} />
-  </button>
-</div>
-<DeleteConfirmModal
-  open={showEmptyTrashModal}
-  title="خالی کردن سطل زباله"
-  message="آیا مطمئنی می‌خواهی تمام یادداشت‌های سطل زباله را برای همیشه حذف کنی؟ این عملیات قابل بازگشت نیست."
-  confirmText="خالی کردن سطل"
-  cancelText="انصراف"
-  onClose={() => setShowEmptyTrashModal(false)}
-  onConfirm={() => {
-    onEmptyTrash();
-    setShowEmptyTrashModal(false);
-  }}
-/>
-    </div>
+    </>
   );
 }
 
